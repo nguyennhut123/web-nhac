@@ -1,0 +1,40 @@
+/* src/index.css */
+* { box-sizing: border-box; }
+body { 
+  margin: 0; 
+  background-color: #121212; /* Nền đen chuẩn Spotify */
+  color: #ffffff; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+}
+
+/* Làm đẹp thanh cuộn (Scrollbar) */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #121212; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Làm đẹp thanh trượt âm lượng và tiến trình */
+input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; }
+input[type=range]::-webkit-slider-thumb { 
+  -webkit-appearance: none; height: 12px; width: 12px; border-radius: 50%; 
+  background: #fff; margin-top: -4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+}
+input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; border-radius: 2px; }
+
+/* Hiệu ứng danh sách */
+.list-item { 
+  padding: 15px 20px; border-bottom: 1px solid #282828; 
+  cursor: pointer; transition: background 0.2s; color: #b3b3b3; 
+}
+.list-item:hover { background-color: #2a2a2a; color: #fff; }
+.list-item.selected { 
+  background-color: #2a2a2a; color: #ff5500; 
+  border-left: 4px solid #ff5500; font-weight: bold; padding-left: 16px; 
+}
+
+/* Hiệu ứng nút bấm */
+.icon-btn { 
+  background: none; border: none; color: #b3b3b3; cursor: pointer; 
+  transition: color 0.2s, transform 0.2s; display: flex; align-items: center; justify-content: center; 
+}
+.icon-btn:hover { color: #fff; transform: scale(1.1); }
