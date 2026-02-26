@@ -66,7 +66,7 @@ export const AudioProvider = ({ children }) => {
     if (currentTrack) {
       let finalUrl = currentTrack.url.split('#')[0];
       if (finalUrl.includes('dac.phantam.top')) {
-finalUrl = \https://api-nhac-1.onrender.com/api/stream?url=${encodeURIComponent(finalUrl)}`;`
+finalUrl = `https://api-nhac-1.onrender.com/api/stream?url=${encodeURIComponent(finalUrl)}`;
       }
       audioRef.current.src = finalUrl;
       setCurrentTime(0);
