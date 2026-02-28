@@ -61,18 +61,35 @@ export const AudioProvider = ({ children }) => {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
   const audioRef = useRef(new Audio());
 
-// === XỬ LÝ PHÁT NHẠC TRỰC TIẾP ===
+  // === XỬ LÝ PHÁT NHẠC & NINJA PROXY ===
   useEffect(() => {
-    if (currentTrack) {
+    if (currentTrack && currentTrack.url) {
       let finalUrl = currentTrack.url.split('#')[0];
+      
+      // Bật camera theo dõi xem link nào đang chạy
+      console.log("🎵 Đang thử phát link:", finalUrl);
+
+      // Cứu lại các bài hát cũ có chứa dac.phantam.top (cần proxy của Render để chạy trên Vercel)
+      if (finalUrl.includes('dac.phantam.top')) {
+        finalUrl = `https://api-nhac-1.onrender.com/api/stream?url=${encodeURIComponent(finalUrl)}`;
+      }
+
       audioRef.current.src = finalUrl;
       setCurrentTime(0);
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log("Lỗi:", err));
+      
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(err => {
+            console.log("❌ Lỗi phát nhạc:", err);
+            setIsPlaying(false);
+        });
     }
   }, [currentTrack]);
 
   useEffect(() => {
-    isPlaying ? audioRef.current.play() : audioRef.current.pause();
+    if (audioRef.current.src) {
+        isPlaying ? audioRef.current.play().catch(e => console.log(e)) : audioRef.current.pause();
+    }
   }, [isPlaying]);
 
   const playNext = () => {
@@ -116,11 +133,11 @@ export const AudioProvider = ({ children }) => {
     
     const handleEnded = () => {
       if (repeatMode === 2) {
-        audio.currentTime = 0; audio.play();
+        audio.currentTime = 0; audio.play().catch(e => console.log(e));
       } else {
         const currentIndex = currentPlaylist.findIndex(song => song.id === currentTrack.id);
         if (stopAfterAlbum && currentIndex === currentPlaylist.length - 1) {
-            setIsPlaying(false);
+            setIs প্রাই(false);
             setStopAfterAlbum(false);
             return; 
         }
