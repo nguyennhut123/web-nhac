@@ -20,7 +20,7 @@ const MusicBrowser = () => {
   const [viewStep, setViewStep] = useState('artists'); // 'artists', 'albums', 'songs'
 
   useEffect(() => {
-fetch('https://api-nhac-1.onrender.com/api/music')
+fetch('/database.json')
       .then(res => res.json())
       .then(data => { setMusicData(data); setLoading(false); })
       .catch(err => console.error("Lỗi:", err));
